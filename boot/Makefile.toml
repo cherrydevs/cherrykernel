@@ -1,0 +1,4 @@
+[tasks.run]
+description = "boot thing genimg or something"
+command = "cargo"
+args = ["run"]

@@ -1,0 +1,10 @@
+[tasks.run]
+description = "Runs the kernel in QEMU as well as building it"
+command = "cargo"
+args = ["kbuild"]
+dependencies = ["qemu"]
+
+
+[tasks.qemu]
+description = "Runs QEMU"
+scripts = ["qemu-system-x86_64 -drive format=raw,file=target/x86_64-pineapple/debug/boot-bios-pineapple.img -serial stdio"]

@@ -1,0 +1,3 @@
+[alias]
+kbuild = """build --target x86_64-cherrykernel.json -Z build-std=core,alloc \
+    -Z build-std-features=compiler-builtins-mem"""
