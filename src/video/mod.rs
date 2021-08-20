@@ -37,11 +37,13 @@ pub fn init_gop(mut buffer: &mut FrameBuffer) {
             bytes_per_pixel,
         })
     });
-    let bg = Color::hex(0x000000);
-    let mut logger_instance = logger::Logger::new();
+    let bg = 0x000000;
+    let fg = 0x00FF00;
+    let mut logger_instance = logger::Logger::new(bg, fg);
+    logger_instance.multi = 4;
     println!("{:#?}", buffer.info());
-    draw_rect(0, 0, width, height, bg);
-    logger_instance.println("cherry\ncherry\ncherry\ncherry\ncherry\ncherry");
+    draw_rect(0, 0, width, height, Color::hex(bg));
+    logger_instance.println("limeyteam");
     /*
     logger_instance.render_char('c');
     logger_instance.render_char('c');
