@@ -24,7 +24,7 @@ dependencies = [
 [[package]]
 name = "bootloader"
 version = "0.10.7"
-source = "git+https://github.com/rust-osdev/bootloader.git#865481e9eded287d1bd8ef4148fb8443b5dfae4b"
+source = "git+https://github.com/rust-osdev/bootloader#865481e9eded287d1bd8ef4148fb8443b5dfae4b"
 
 [[package]]
 name = "bootloader-locator"
@@ -49,7 +49,7 @@ dependencies = [
  "spinning_top",
  "uart_16550",
  "volatile 0.2.7",
- "x86_64 0.14.4 (git+https://github.com/rust-osdev/x86_64.git)",
+ "x86_64",
 ]
 
 [[package]]
@@ -112,7 +112,7 @@ version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08cc920d83ee33c0f9b73aa441e75468bf2d10c959a3eb6260cf720b05ac91a1"
 dependencies = [
- "x86_64 0.14.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "x86_64",
 ]
 
 [[package]]
@@ -143,7 +143,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "65ad019480ef5ff8ffe66d6f6a259cd87cf317649481394981db1739d844f374"
 dependencies = [
  "bitflags",
- "x86_64 0.14.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "x86_64",
 ]
 
 [[package]]
@@ -163,16 +163,6 @@ name = "x86_64"
 version = "0.14.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d95947de37ad0d2d9a4a4dd22e0d042e034e5cbd7ab53edbca0d8035e0a6a64d"
-dependencies = [
- "bit_field",
- "bitflags",
- "volatile 0.4.4",
-]
-
-[[package]]
-name = "x86_64"
-version = "0.14.4"
-source = "git+https://github.com/rust-osdev/x86_64.git#a9cbf1471d38b18dcfe22bf399082a445341c3e5"
 dependencies = [
  "bit_field",
  "bitflags",

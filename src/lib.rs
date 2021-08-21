@@ -6,13 +6,17 @@
 #![feature(destructuring_assignment)]
 #![allow(incomplete_features)]
 #![feature(const_generics)]
+#[feature(asm)]
 
 extern crate alloc;
 
 pub mod serial;
 pub mod allocator;
 pub mod video;
+pub mod interrupts;
+pub mod libs;
 
+use interrupts::PICS;
 use x86_64;
 use core::panic::PanicInfo;
 use bootloader::boot_info::{FrameBuffer, FrameBufferInfo, BootInfo};
@@ -36,6 +40,13 @@ pub fn hlt_loop() -> ! {
     loop {
         x86_64::instructions::hlt();
     }
+}
+
+pub fn init_int_extern() {
+    interrupts::gdt::init_gdt();
+    interrupts::init_idt();
+    unsafe { PICS.lock().initialize() };
+    //x86_64::instructions::interrupts::enable();
 }
 
 #[macro_export]

@@ -1,3 +1,4 @@
+// venka v0.1.16
 // Based off https://github.com/anellie/yacuri/blob/main/kernel/src/graphics/mod.rs
 #![no_std]
 #![feature(alloc)]
@@ -9,6 +10,7 @@ use spin::{Mutex, MutexGuard};
 use conquer_once::spin::OnceCell;
 use crate::println;
 static FRAMEBUFFER: OnceCell<Mutex<Framebuffer>> = OnceCell::uninit();
+static LOGGER_INSTANCE: OnceCell<Mutex<logger::Logger>> = OnceCell::uninit();
 use spinning_top::Spinlock;
 use core::{
     fmt::{self, Write},
@@ -40,10 +42,10 @@ pub fn init_gop(mut buffer: &mut FrameBuffer) {
     let bg = 0x000000;
     let fg = 0x00FF00;
     let mut logger_instance = logger::Logger::new(bg, fg);
-    logger_instance.multi = 4;
+    LOGGER_INSTANCE.init_once(|| {Mutex::new(logger_instance)});
+    obtain_logger().multi = 4;
     println!("{:#?}", buffer.info());
     draw_rect(0, 0, width, height, Color::hex(bg));
-    logger_instance.println("limeyteam");
     /*
     logger_instance.render_char('c');
     logger_instance.render_char('c');
@@ -55,6 +57,18 @@ pub fn init_gop(mut buffer: &mut FrameBuffer) {
     logger_instance.render_char('c');
     logger_instance.render_char('c');
     */
+}
+
+pub fn local_charprint(char: char) {
+    obtain_logger().render_char(char);
+}
+
+pub fn local_println(string: &str) {
+    obtain_logger().println(string);
+}
+
+pub fn obtain_logger() -> MutexGuard<'static, logger::Logger> {
+    LOGGER_INSTANCE.get().unwrap().lock()
 }
 
 pub struct Framebuffer {

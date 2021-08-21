@@ -6,8 +6,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bootloader = { git = "https://github.com/rust-osdev/bootloader.git" }
-x86_64 = { git = "https://github.com/rust-osdev/x86_64.git" }
+x86_64 = "0.14.3"
 uart_16550 = "0.2.0"
 spin = "0.5.2"
 volatile = "0.2.6"
@@ -24,5 +23,11 @@ members = ["boot"]
 version = "1.0"
 features = ["spin_no_std"]
 
+[dependencies.bootloader]
+git = "https://github.com/rust-osdev/bootloader"
+
 [package.metadata.bootloader]
 map-physical-memory = true
+#esired-framebuffer-width = 1280
+#desired-framebuffer-height = 720
+kernel-stack-size = 67108864
