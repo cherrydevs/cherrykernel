@@ -6,7 +6,7 @@
 #![feature(destructuring_assignment)]
 #![allow(incomplete_features)]
 #![feature(const_generics)]
-#[feature(asm)]
+#![feature(asm)]
 
 extern crate alloc;
 
@@ -16,13 +16,13 @@ pub mod video;
 pub mod interrupts;
 pub mod libs;
 
+
+pub use libs::{cherry86::{hlt_loop}, cherry86};
 use interrupts::PICS;
-use x86_64;
+use {x86_64, x86_64::VirtAddr};
 use core::panic::PanicInfo;
 use bootloader::boot_info::{FrameBuffer, FrameBufferInfo, BootInfo};
-use allocator::memory::active_level_4_table;
-use x86_64::VirtAddr;
-use allocator::memory::BootInfoFrameAllocator;
+use allocator::memory::{active_level_4_table, BootInfoFrameAllocator};
 use alloc::alloc::Layout;
 
 #[panic_handler]
@@ -36,19 +36,15 @@ fn alloc_error_handler(layout: Layout) -> ! {
     panic!("allocation error: {:?}", layout)
 }
 
-pub fn hlt_loop() -> ! {
-    loop {
-        x86_64::instructions::hlt();
-    }
-}
-
+// initializes interrupts
 pub fn init_int_extern() {
     interrupts::gdt::init_gdt();
     interrupts::init_idt();
     unsafe { PICS.lock().initialize() };
-    //x86_64::instructions::interrupts::enable();
+    //cherry86::intr_enable();
 }
 
+// global println macro to print to serial + logger
 #[macro_export]
 macro_rules! println {
     () => ($crate::serial_print!("\n"));

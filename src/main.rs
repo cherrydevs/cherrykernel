@@ -16,6 +16,8 @@ use cherrykernel::libs::cherrygfx::{gfx_println, gfx_obtainlogger};
 
 entry_point!(kernel_main);
 
+// note to self, map apic so no double fault
+
 fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
     //Initializes the kernel, Interrupts, Serial, Graphics, etc...
     //println!("CherryKernel Serial Output");
@@ -28,6 +30,10 @@ fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
     gfx_println("cherry\n");
     gfx_obtainlogger().fg = 0x00FF00;
     gfx_println("by limeyteam");
+    unsafe {
+
+    }
+    //x86_64::instructions::interrupts::enable();
     /*
     unsafe {
         *(0xdeadbeef as *mut u64) = 42;
