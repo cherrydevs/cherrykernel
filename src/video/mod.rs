@@ -9,7 +9,7 @@ use bootloader::boot_info::{FrameBuffer, FrameBufferInfo};
 use spin::{Mutex, MutexGuard};
 use conquer_once::spin::OnceCell;
 use crate::println;
-static FRAMEBUFFER: OnceCell<Mutex<Framebuffer>> = OnceCell::uninit();
+pub static FRAMEBUFFER: OnceCell<Mutex<Framebuffer>> = OnceCell::uninit();
 static LOGGER_INSTANCE: OnceCell<Mutex<logger::Logger>> = OnceCell::uninit();
 use spinning_top::Spinlock;
 use core::{
@@ -45,7 +45,6 @@ pub fn init_gop(mut buffer: &mut FrameBuffer) {
     LOGGER_INSTANCE.init_once(|| {Mutex::new(logger_instance)});
     obtain_logger().multi = 4;
     println!("{:#?}", buffer.info());
-    draw_rect(0, 0, width, height, Color::hex(bg));
     /*
     logger_instance.render_char('c');
     logger_instance.render_char('c');
@@ -73,11 +72,11 @@ pub fn obtain_logger() -> MutexGuard<'static, logger::Logger> {
 
 pub struct Framebuffer {
     // the underlying buffer
-    buffer: &'static mut [u8],
+    pub buffer: &'static mut [u8],
     // height in pixels
-    height: usize,
+    pub height: usize,
     // width in pixels
-    width: usize,
+    pub width: usize,
     // stride in bytes (!!)
     stride: usize,
     // bytes per pixel
@@ -105,7 +104,7 @@ impl Color {
     }
 }
 
-fn obtain_buffer() -> MutexGuard<'static, Framebuffer> {
+pub fn obtain_buffer() -> MutexGuard<'static, Framebuffer> {
     FRAMEBUFFER.get().unwrap().lock()
 }
 
@@ -125,7 +124,7 @@ fn draw_hori_line(x: usize, y: usize, len: usize, color: Color) {
     }
 }
 
-pub fn draw_rect(x: usize, y: usize, w: usize, h: usize, color: Color) {
+pub fn local_draw_rect(x: usize, y: usize, w: usize, h: usize, color: Color) {
     let mut buf = obtain_buffer();
     assert!((x + w) <= buf.width);
     assert!((y + h) <= buf.width);

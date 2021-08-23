@@ -1,4 +1,5 @@
-use super::{Color, draw_pixel, draw_rect};
+use super::{Color, draw_pixel};
+use crate::libs::cherrygfx::draw_rect;
 use crate::println;
 
 static X_SPACE: usize = 2;

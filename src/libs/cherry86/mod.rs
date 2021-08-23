@@ -1,4 +1,4 @@
-// cherry86 0.1.5
+// cherry86 v0.1.5
 // wrapper for x86 asm instructions
 
 // halts the os once
