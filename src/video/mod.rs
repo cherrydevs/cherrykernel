@@ -4,13 +4,12 @@
 #![feature(alloc)]
 extern crate alloc;
 use alloc::slice;
-pub mod logger;
 use bootloader::boot_info::{FrameBuffer, FrameBufferInfo};
 use spin::{Mutex, MutexGuard};
 use conquer_once::spin::OnceCell;
 use crate::println;
 pub static FRAMEBUFFER: OnceCell<Mutex<Framebuffer>> = OnceCell::uninit();
-static LOGGER_INSTANCE: OnceCell<Mutex<logger::Logger>> = OnceCell::uninit();
+//static LOGGER_INSTANCE: OnceCell<Mutex<logger::Logger>> = OnceCell::uninit();
 use spinning_top::Spinlock;
 use core::{
     fmt::{self, Write},
@@ -39,13 +38,13 @@ pub fn init_gop(mut buffer: &mut FrameBuffer) {
             bytes_per_pixel,
         })
     });
+    /*
     let bg = 0x000000;
     let fg = 0x00FF00;
     let mut logger_instance = logger::Logger::new(bg, fg);
     LOGGER_INSTANCE.init_once(|| {Mutex::new(logger_instance)});
     obtain_logger().multi = 4;
     println!("{:#?}", buffer.info());
-    /*
     logger_instance.render_char('c');
     logger_instance.render_char('c');
     //logger_instance.line_feed();
@@ -58,6 +57,7 @@ pub fn init_gop(mut buffer: &mut FrameBuffer) {
     */
 }
 
+/*
 pub fn local_charprint(char: char) {
     obtain_logger().render_char(char);
 }
@@ -69,6 +69,8 @@ pub fn local_println(string: &str) {
 pub fn obtain_logger() -> MutexGuard<'static, logger::Logger> {
     LOGGER_INSTANCE.get().unwrap().lock()
 }
+
+*/
 
 pub struct Framebuffer {
     // the underlying buffer

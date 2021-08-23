@@ -1,6 +1,6 @@
 #![no_std]
 #[macro_use]
-use crate::video::local_charprint;
+//use crate::video::local_charprint;
 pub mod gdt;
 use crate::hlt_loop;
 use lazy_static::lazy_static;

@@ -3,7 +3,7 @@
 
 pub mod windowserver;
 
-use crate::video::{local_println, obtain_logger, logger::Logger, local_draw_rect, Color, obtain_buffer, Framebuffer, FRAMEBUFFER};
+use crate::video::{local_draw_rect, Color, obtain_buffer, Framebuffer, FRAMEBUFFER};
 use crate::println;
 use spin::{Mutex, MutexGuard};
 use conquer_once::spin::OnceCell;
@@ -52,8 +52,10 @@ pub fn init_gfx() {
             ws_info_tmp
         )
     });
+    /*
     write_fgcolor(get_ws_info().palette.fg);
     write_bgcolor(get_ws_info().palette.bg);
+     */
     let w_temp = get_ws_info().w;
     let h_temp = get_ws_info().h;
     draw_rect(0, 0, w_temp, h_temp, Color::hex(get_ws_info().palette.bg))
@@ -76,12 +78,12 @@ pub fn obtain_framebuffer() -> MutexGuard<'static, Framebuffer> {
 }
 // simple logger and managment functions
 // font render functions
-pub fn gfx_println(string: &str) { local_println(string); }
+// pub fn gfx_println(string: &str) { local_println(string); }
 // gives you a mutable version of the logger to tinker with color
-pub fn gfx_obtainlogger() -> MutexGuard<'static, Logger> { obtain_logger()  }
+// pub fn gfx_obtainlogger() -> MutexGuard<'static, Logger> { obtain_logger()  }
 // writes a different hex color to the foreground of the logger
-pub fn write_fgcolor(hex: u32) { gfx_obtainlogger().fg = hex; }
+// pub fn write_fgcolor(hex: u32) { gfx_obtainlogger().fg = hex; }
 // writes a different hex color to the background of the logger
-pub fn write_bgcolor(hex: u32) { gfx_obtainlogger().bg = hex; }
+// pub fn write_bgcolor(hex: u32) { gfx_obtainlogger().bg = hex; }
 // draws a rectangle to the screen
 pub fn draw_rect(x: usize, y: usize, w: usize, h: usize, hex: Color) { local_draw_rect(x, y, w, h, hex)}

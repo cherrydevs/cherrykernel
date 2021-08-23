@@ -11,7 +11,7 @@ use bootloader::{entry_point, BootInfo};
 use x86_64::VirtAddr;
 use cherrykernel::allocator;
 use cherrykernel::video::init_gop;
-use cherrykernel::libs::{cherrygfx::{gfx_println, gfx_obtainlogger}, cherrygfx};
+use cherrykernel::libs::{cherrygfx};
 
 entry_point!(kernel_main);
 
@@ -24,7 +24,7 @@ fn kernel_main(boot_info: &'static mut BootInfo) -> ! {
     // Initializes Graphics and the corresponding library
     init_gop(boot_info.framebuffer.as_mut().unwrap());
     cherrygfx::init_gfx();
-    gfx_println("cherry by limey");
+    //gfx_println("cherry by limey");
     cherrygfx::create_window(300, 300, 100, 100);
     /*
     init_memory(boot_info);
