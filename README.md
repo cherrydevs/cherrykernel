@@ -1,5 +1,5 @@
 # cherrykernel
-####Small, simple, and fast kernel written in Rust.
+#### Small, simple, and fast kernel written in Rust.
 
 Checklist:
 - [x] Make kernel base
